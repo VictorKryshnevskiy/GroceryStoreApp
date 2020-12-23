@@ -10,19 +10,11 @@ using System.Windows.Forms;
 
 namespace GroceryStoreApp
 {
-    public partial class MainForm : Form
+    public partial class BuyerForm : Form
     {
-        public MainForm()
+        public BuyerForm()
         {
             InitializeComponent();
-        }
-
-        private void confirmUserButton_Click(object sender, EventArgs e)
-        {
-            if (selectUserComboBox.SelectedItem != null)
-            {
-                
-            }
         }
     }
 }
