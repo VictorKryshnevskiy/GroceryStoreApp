@@ -8,6 +8,6 @@ namespace GroceryStoreApp
 {
     public class WeightProduct : BaseProduct
     {
-        public int weight { get; set;} 
+        public int Weight { get; set;} 
     }
 }
