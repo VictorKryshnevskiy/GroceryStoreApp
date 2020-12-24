@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Windows.Forms;
 
 namespace GroceryStoreApp
@@ -19,7 +21,14 @@ namespace GroceryStoreApp
         {
             if (FileSystem.IsExist(docPath))
             {
-
+                if (!FileSystem.IsFileEmpty(docPath))
+                {
+                    var products = JsonHelper.Deserialize<List<Product>>(FileSystem.ReadAllText(docPath));
+                    foreach (var item in products)
+                    {
+                        productsDataGridView.Rows.Add(item);
+                    }
+                }
             }
             else
             {
@@ -29,7 +38,7 @@ namespace GroceryStoreApp
 
         private void addProductButton_Click(object sender, EventArgs e)
         {
-            AddProductForm addProductForm = new AddProductForm();
+            AddProductForm addProductForm = new AddProductForm(docPath);
             addProductForm.ShowDialog();
         }
     }

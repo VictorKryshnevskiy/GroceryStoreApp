@@ -5,7 +5,7 @@ namespace GroceryStoreApp
 {
     public partial class MainForm : Form
     {
-        const string docPath = "Shop.txt";
+        const string docPath = "Shop.json";
         public MainForm()
         {
             InitializeComponent();
