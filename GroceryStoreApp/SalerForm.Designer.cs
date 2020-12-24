@@ -32,16 +32,25 @@ namespace GroceryStoreApp
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.addProductButton = new System.Windows.Forms.Button();
             this.deleteProductButton = new System.Windows.Forms.Button();
+            this.nameColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.purchasePriceColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.salePriceColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.shelfLifeColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
             // dataGridView1
             // 
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.nameColumn,
+            this.purchasePriceColumn,
+            this.salePriceColumn,
+            this.shelfLifeColumn});
             this.dataGridView1.Location = new System.Drawing.Point(12, 12);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowTemplate.Height = 25;
-            this.dataGridView1.Size = new System.Drawing.Size(776, 349);
+            this.dataGridView1.Size = new System.Drawing.Size(766, 349);
             this.dataGridView1.TabIndex = 2;
             // 
             // addProductButton
@@ -52,6 +61,7 @@ namespace GroceryStoreApp
             this.addProductButton.TabIndex = 3;
             this.addProductButton.Text = "Добавить товар";
             this.addProductButton.UseVisualStyleBackColor = true;
+            this.addProductButton.Click += new System.EventHandler(this.addProductButton_Click);
             // 
             // deleteProductButton
             // 
@@ -61,6 +71,26 @@ namespace GroceryStoreApp
             this.deleteProductButton.TabIndex = 4;
             this.deleteProductButton.Text = "Удалить товар";
             this.deleteProductButton.UseVisualStyleBackColor = true;
+            // 
+            // nameColumn
+            // 
+            this.nameColumn.HeaderText = "Наименование";
+            this.nameColumn.Name = "nameColumn";
+            // 
+            // purchasePriceColumn
+            // 
+            this.purchasePriceColumn.HeaderText = "Закупочная цена";
+            this.purchasePriceColumn.Name = "purchasePriceColumn";
+            // 
+            // salePriceColumn
+            // 
+            this.salePriceColumn.HeaderText = "Розничная цена";
+            this.salePriceColumn.Name = "salePriceColumn";
+            // 
+            // shelfLifeColumn
+            // 
+            this.shelfLifeColumn.HeaderText = "Срок хранения";
+            this.shelfLifeColumn.Name = "shelfLifeColumn";
             // 
             // SalerForm
             // 
@@ -83,5 +113,9 @@ namespace GroceryStoreApp
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.Button addProductButton;
         private System.Windows.Forms.Button deleteProductButton;
+        private System.Windows.Forms.DataGridViewTextBoxColumn nameColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn purchasePriceColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn salePriceColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn shelfLifeColumn;
     }
 }

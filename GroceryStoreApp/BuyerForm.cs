@@ -13,6 +13,7 @@ namespace GroceryStoreApp
         public BuyerForm(string file)
         {
             docPath = file;
+            InitializeComponent();
         }
 
         private void BuyerForm_Load(object sender, EventArgs e)

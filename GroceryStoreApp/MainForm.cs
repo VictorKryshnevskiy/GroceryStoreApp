@@ -5,7 +5,7 @@ namespace GroceryStoreApp
 {
     public partial class MainForm : Form
     {
-        const string docPath = "";
+        const string docPath = "Shop.txt";
         public MainForm()
         {
             InitializeComponent();
@@ -24,6 +24,8 @@ namespace GroceryStoreApp
                 {
                     SalerForm salerForm = new SalerForm(docPath);
                     salerForm.Show();
+                    salerForm.Activate();
+                    salerForm.BringToFront();
                 }
             }
         }

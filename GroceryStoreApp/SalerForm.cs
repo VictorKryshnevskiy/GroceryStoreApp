@@ -1,18 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace GroceryStoreApp
 {
     public partial class SalerForm : Form
     {
-        readonly string docPath;
+        string docPath ;
         public SalerForm()
         {
             InitializeComponent();
@@ -20,8 +13,8 @@ namespace GroceryStoreApp
         public SalerForm(string file)
         {
             docPath = file;
+            InitializeComponent();
         }
-
         private void SalerForm_Load(object sender, EventArgs e)
         {
             if (FileSystem.IsExist(docPath))
@@ -32,6 +25,12 @@ namespace GroceryStoreApp
             {
                 FileSystem.Create(docPath);
             }
+        }
+
+        private void addProductButton_Click(object sender, EventArgs e)
+        {
+            AddProductForm addProductForm = new AddProductForm();
+            addProductForm.ShowDialog();
         }
     }
 }
