@@ -12,9 +12,26 @@ namespace GroceryStoreApp
 {
     public partial class SalerForm : Form
     {
+        readonly string docPath;
         public SalerForm()
         {
             InitializeComponent();
+        }
+        public SalerForm(string file)
+        {
+            docPath = file;
+        }
+
+        private void SalerForm_Load(object sender, EventArgs e)
+        {
+            if (FileSystem.IsExist(docPath))
+            {
+
+            }
+            else
+            {
+                FileSystem.Create(docPath);
+            }
         }
     }
 }

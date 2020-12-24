@@ -1,17 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace GroceryStoreApp
 {
     public partial class MainForm : Form
     {
+        const string docPath = "";
         public MainForm()
         {
             InitializeComponent();
@@ -21,7 +15,16 @@ namespace GroceryStoreApp
         {
             if (selectUserComboBox.SelectedItem != null)
             {
-                
+                if (selectUserComboBox.Text == "Покупатель")
+                {
+                    BuyerForm buyerForm = new BuyerForm(docPath);
+                    buyerForm.ShowDialog();
+                }
+                if (selectUserComboBox.Text == "Продавец")
+                {
+                    SalerForm salerForm = new SalerForm(docPath);
+                    salerForm.Show();
+                }
             }
         }
     }
