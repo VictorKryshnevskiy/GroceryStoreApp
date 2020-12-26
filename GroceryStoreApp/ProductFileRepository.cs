@@ -68,27 +68,19 @@ namespace GroceryStoreApp
             {
                 fileName = pieceProductsPath;
             }
-            try
+            var jsonString = FileSystem.ReadAllText(fileName);
+            var products = JsonHelper.Deserialize<List<T>>(jsonString);
+            if (products.Exists(x => x.Id == product.Id))
             {
-                var jsonString = FileSystem.ReadAllText(fileName);
-                var products = JsonHelper.Deserialize<List<T>>(jsonString);
-                if (products.Exists(x => x.Id == product.Id))
-                {
-                    int index = products.FindIndex(x => x.Id == product.Id);
-                    products[index] = product;
-                }
-                else
-                {
-                    products.Add(product);
-                }
-                jsonString = JsonHelper.Serialize(products);
-                FileSystem.WriteAllText(fileName, jsonString);
+                int index = products.FindIndex(x => x.Id == product.Id);
+                products[index] = product;
             }
-            catch (Exception)
+            else
             {
-
-                throw;
+                products.Add(product);
             }
+            jsonString = JsonHelper.Serialize(products);
+            FileSystem.WriteAllText(fileName, jsonString);
         }
         public void Update<T>(List<T> products) where T : BaseProduct
         {

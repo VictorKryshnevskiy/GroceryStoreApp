@@ -73,12 +73,12 @@ namespace GroceryStoreApp
             int indexToEdit = FindIndexInArray(indexInTable, products);
             if (products is List<PieceProduct>)
             {
-                AddProductForm addProductForm = new AddProductForm(pieceProductsList[indexToEdit]);
+                AddProductForm addProductForm = new AddProductForm(pieceProductsList[indexToEdit], Classification.SinglePieces);
                 addProductForm.ShowDialog();
             }
             if (products is List<WeightProduct>)
             {
-                AddProductForm addProductForm = new AddProductForm(weightProductsList[indexToEdit]);
+                AddProductForm addProductForm = new AddProductForm(weightProductsList[indexToEdit], Classification.WeightСlasses);
                 addProductForm.ShowDialog();
             }
         }
@@ -95,12 +95,12 @@ namespace GroceryStoreApp
             weightProductsList = repository.GetWeightProducts();
             foreach (var item in weightProductsList)
             {
-                productsDataGridView.Rows.Add(item.Name, item.PurchasePrice, item.SalePrice, item.ShelfLife, item.Count, item.Storage, item.Id, Classification.WeightСlasses);
+                productsDataGridView.Rows.Add(item.Name, item.PurchasePrice, item.SalePrice, item.ShelfLife.ToShortDateString(), item.Count, item.Storage, item.Id, Classification.WeightСlasses);
             }
             pieceProductsList = repository.GetPieceProducts();
             foreach (var item in pieceProductsList)
             {
-                productsDataGridView.Rows.Add(item.Name, item.PurchasePrice, item.SalePrice, item.ShelfLife, item.Count, item.Storage, item.Id, Classification.SinglePieces);
+                productsDataGridView.Rows.Add(item.Name, item.PurchasePrice, item.SalePrice, item.ShelfLife.ToShortDateString(), item.Count, item.Storage, item.Id, Classification.SinglePieces);
             }
         }
     }

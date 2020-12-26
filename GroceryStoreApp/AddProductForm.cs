@@ -18,31 +18,22 @@ namespace GroceryStoreApp
             repository = new ProductFileRepository();
             isEditing = false;
         }
-        public AddProductForm(PieceProduct product)
+        public AddProductForm(BaseProduct product, Classification classification)
         {
             InitializeComponent();
             repository = new ProductFileRepository();
             isEditing = true;
             this.product = product;
-            classification = Classification.SinglePieces;
-        }
-        public AddProductForm(WeightProduct product)
-        {
-            InitializeComponent();
-            repository = new ProductFileRepository();
-            isEditing = true;
-            this.product = product;
-            classification = Classification.WeightСlasses;
+            this.classification = classification;
         }
         private void saveButton_Click(object sender, EventArgs e)
         {
-
             try
             {
                 var name = nameTextBox.Text;
                 var purchasePrice = Convert.ToDecimal(purPriceTextBox.Text);
                 var salePrice = Convert.ToDecimal(salePriceTextBox.Text);
-                var shelfLife = Convert.ToDateTime(shelfLifeMaskedTextBox.Text);
+                var shelfLife = Convert.ToDateTime(shelfLifeMaskedTextBox.Text).Date;
                 var quantity = Convert.ToInt32(quantityTextBox.Text);
                 if (!isEditing)
                 {
@@ -104,9 +95,10 @@ namespace GroceryStoreApp
                 nameTextBox.Text = product.Name;
                 purPriceTextBox.Text = product.PurchasePrice.ToString();
                 salePriceTextBox.Text = product.SalePrice.ToString();
-                shelfLifeMaskedTextBox.Text = product.ShelfLife.ToString();
+                shelfLifeMaskedTextBox.Text = product.ShelfLife.ToShortDateString();
                 quantityTextBox.Text = product.Count.ToString();
                 classificationComboBox.SelectedValue = classification;
+                classificationComboBox.Enabled = false;
             }
         }
         private static void FillComboBox(ComboBox comboBox)
