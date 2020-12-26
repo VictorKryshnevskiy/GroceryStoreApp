@@ -58,6 +58,7 @@ namespace GroceryStoreApp
         }
         public void Save<T>(T product) where T : BaseProduct
         {
+            Validate(product);
             string fileName = null;
             if (product is WeightProduct)
             {
@@ -102,6 +103,17 @@ namespace GroceryStoreApp
             }
             var jsonString = JsonHelper.Serialize(products);
             FileSystem.WriteAllText(fileName, jsonString);
+        }
+        public void Validate<T>(T product) where T : BaseProduct
+        {
+            if (product.ShelfLife < DateTime.Now)
+            {
+                throw new Exception("Товар не может быть просрочен");
+            }
+            if (product.Name.Length > 100)
+            {
+                throw new Exception("Наименование не может быть длинее 100 символов");
+            }
         }
     }
 }

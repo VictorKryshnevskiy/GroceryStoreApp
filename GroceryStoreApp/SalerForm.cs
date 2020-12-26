@@ -16,17 +16,6 @@ namespace GroceryStoreApp
         private void SalerForm_Load(object sender, EventArgs e)
         {
             repository = new ProductFileRepository();
-            weightProductsList = repository.GetWeightProducts();
-            foreach (var item in weightProductsList)
-            {
-                productsDataGridView.Rows.Add(item.Name, item.PurchasePrice, item.SalePrice, item.ShelfLife, item.Count, item.Storage, item.Id, Classification.WeightСlasses);
-            }
-            pieceProductsList = repository.GetPieceProducts();
-            foreach (var item in pieceProductsList)
-            {
-                productsDataGridView.Rows.Add(item.Name, item.PurchasePrice, item.SalePrice, item.ShelfLife, item.Count, item.Storage, item.Id, Classification.SinglePieces);
-            }
-
         }
         private void addProductButton_Click(object sender, EventArgs e)
         {
@@ -35,17 +24,31 @@ namespace GroceryStoreApp
         }
         private void deleteProductButton_Click(object sender, EventArgs e)
         {
-            int rowIndex = productsDataGridView.CurrentRow.Index;
-            if ((Classification)productsDataGridView[categoryColumn.Name, rowIndex].Value == Classification.WeightСlasses)
+            if (productsDataGridView.CurrentRow != null)
             {
-                DeleteProduct(rowIndex, weightProductsList);
-                return;
+                int rowIndex = productsDataGridView.CurrentRow.Index;
+                if (rowIndex != productsDataGridView.NewRowIndex)
+                {
+                    if ((Classification)productsDataGridView[categoryColumn.Name, rowIndex].Value == Classification.WeightСlasses)
+                    {
+                        DeleteProduct(rowIndex, weightProductsList);
+                        return;
+                    }
+                    if ((Classification)productsDataGridView[categoryColumn.Name, rowIndex].Value == Classification.SinglePieces)
+                    {
+                        DeleteProduct(rowIndex, pieceProductsList);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Не выбран товар для удаления");
+                }
             }
-            if ((Classification)productsDataGridView[categoryColumn.Name, rowIndex].Value == Classification.SinglePieces)
+            else
             {
-                DeleteProduct(rowIndex, pieceProductsList);
+                MessageBox.Show("Не выбран товар для удаления");
             }
-        }
+        } 
         private void productsDataGridView_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             int rowIndex = productsDataGridView.CurrentRow.Index;
@@ -84,6 +87,21 @@ namespace GroceryStoreApp
         {
             return products.FindIndex(x => x.Id.ToString() == productsDataGridView[guidColumn.Index, indexInTable]
         .Value.ToString());
+        }
+
+        private void SalerForm_Activated(object sender, EventArgs e)
+        {
+            productsDataGridView.Rows.Clear();
+            weightProductsList = repository.GetWeightProducts();
+            foreach (var item in weightProductsList)
+            {
+                productsDataGridView.Rows.Add(item.Name, item.PurchasePrice, item.SalePrice, item.ShelfLife, item.Count, item.Storage, item.Id, Classification.WeightСlasses);
+            }
+            pieceProductsList = repository.GetPieceProducts();
+            foreach (var item in pieceProductsList)
+            {
+                productsDataGridView.Rows.Add(item.Name, item.PurchasePrice, item.SalePrice, item.ShelfLife, item.Count, item.Storage, item.Id, Classification.SinglePieces);
+            }
         }
     }
 }

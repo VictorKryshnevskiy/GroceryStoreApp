@@ -45,6 +45,8 @@ namespace GroceryStoreApp
             // 
             // productsDataGridView
             // 
+            this.productsDataGridView.AllowUserToAddRows = false;
+            this.productsDataGridView.AllowUserToDeleteRows = false;
             this.productsDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.productsDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.nameColumn,
@@ -145,6 +147,7 @@ namespace GroceryStoreApp
             this.Controls.Add(this.productsDataGridView);
             this.Name = "SalerForm";
             this.Text = "SalerForm";
+            this.Activated += new System.EventHandler(this.SalerForm_Activated);
             this.Load += new System.EventHandler(this.SalerForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.productsDataGridView)).EndInit();
             this.ResumeLayout(false);

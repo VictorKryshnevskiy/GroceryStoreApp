@@ -30,22 +30,36 @@ namespace GroceryStoreApp
 
         private void buyButton_Click(object sender, EventArgs e)
         {
-            int rowIndex = productsDataGridView.CurrentRow.Index;
-            if ((Classification)productsDataGridView[classificationColumn.Name, rowIndex].Value == Classification.WeightСlasses)
+            if (productsDataGridView.CurrentRow != null)
             {
-                var product = weightProductsList[FindIndexInArray(rowIndex, weightProductsList)];
-                if (!IsProductContained(product.Id))
+                int rowIndex = productsDataGridView.CurrentRow.Index;
+                if (rowIndex != productsDataGridView.NewRowIndex)
                 {
-                    productsToSaleGridView.Rows.Add(product.Name, product.SalePrice, product.ShelfLife, product.Id, Classification.WeightСlasses, 1);
+                    if ((Classification)productsDataGridView[classificationColumn.Name, rowIndex].Value == Classification.WeightСlasses)
+                    {
+                        var product = weightProductsList[FindIndexInArray(rowIndex, weightProductsList)];
+                        if (!IsProductContained(product.Id))
+                        {
+                            productsToSaleGridView.Rows.Add(product.Name, product.SalePrice, product.ShelfLife, product.Id, Classification.WeightСlasses, 1);
+                        }
+                    }
+                    if ((Classification)productsDataGridView[classificationColumn.Name, rowIndex].Value == Classification.SinglePieces)
+                    {
+                        var product = pieceProductsList[FindIndexInArray(rowIndex, pieceProductsList)];
+                        if (!IsProductContained(product.Id))
+                        {
+                            productsToSaleGridView.Rows.Add(product.Name, product.SalePrice, product.ShelfLife, product.Id, Classification.SinglePieces, 1);
+                        }
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Не выбран товар для покупки");
                 }
             }
-            if ((Classification)productsDataGridView[classificationColumn.Name, rowIndex].Value == Classification.SinglePieces)
+            else
             {
-                var product = pieceProductsList[FindIndexInArray(rowIndex, pieceProductsList)];
-                if (!IsProductContained(product.Id))
-                {
-                    productsToSaleGridView.Rows.Add(product.Name, product.SalePrice, product.ShelfLife, product.Id, Classification.SinglePieces, 1);
-                }
+                MessageBox.Show("Не выбран товар для покупки");
             }
 
         }

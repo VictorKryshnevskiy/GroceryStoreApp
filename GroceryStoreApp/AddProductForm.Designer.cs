@@ -57,6 +57,7 @@ namespace GroceryStoreApp
             this.purPriceTextBox.Name = "purPriceTextBox";
             this.purPriceTextBox.Size = new System.Drawing.Size(221, 23);
             this.purPriceTextBox.TabIndex = 1;
+            this.purPriceTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.purPriceTextBox_KeyPress);
             // 
             // salePriceTextBox
             // 
@@ -64,6 +65,7 @@ namespace GroceryStoreApp
             this.salePriceTextBox.Name = "salePriceTextBox";
             this.salePriceTextBox.Size = new System.Drawing.Size(221, 23);
             this.salePriceTextBox.TabIndex = 2;
+            this.salePriceTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.salePriceTextBox_KeyPress);
             // 
             // nameLabel
             // 
@@ -148,10 +150,11 @@ namespace GroceryStoreApp
             // 
             // quantityTextBox
             // 
-            this.quantityTextBox.Location = new System.Drawing.Point(159, 157);
+            this.quantityTextBox.Location = new System.Drawing.Point(159, 158);
             this.quantityTextBox.Name = "quantityTextBox";
             this.quantityTextBox.Size = new System.Drawing.Size(221, 23);
             this.quantityTextBox.TabIndex = 13;
+            this.quantityTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.quantityTextBox_KeyPress);
             // 
             // AddProductForm
             // 

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Linq;
@@ -37,49 +36,56 @@ namespace GroceryStoreApp
         }
         private void saveButton_Click(object sender, EventArgs e)
         {
-            var name = nameTextBox.Text;
-            var purchasePrice = Convert.ToDecimal(purPriceTextBox.Text);
-            var salePrice = Convert.ToDecimal(salePriceTextBox.Text);
-            var shelfLife = Convert.ToDateTime(maskedTextBox1.Text);
-            var quantity = Convert.ToInt32(quantityTextBox.Text);
-            if (!isEditing)
+            try
             {
-                if ((Classification)classificationComboBox.SelectedValue == Classification.WeightСlasses)
+                var name = nameTextBox.Text;
+                var purchasePrice = Convert.ToDecimal(purPriceTextBox.Text);
+                var salePrice = Convert.ToDecimal(salePriceTextBox.Text);
+                var shelfLife = Convert.ToDateTime(maskedTextBox1.Text);
+                var quantity = Convert.ToInt32(quantityTextBox.Text);
+                if (!isEditing)
                 {
-                    var product = new WeightProduct(name, purchasePrice, salePrice, shelfLife, quantity);
-                    repository.Save(product);
+                    if ((Classification)classificationComboBox.SelectedValue == Classification.WeightСlasses)
+                    {
+                        var product = new WeightProduct(name, purchasePrice, salePrice, shelfLife, quantity);
+                        repository.Save(product);
+                    }
+                    if ((Classification)classificationComboBox.SelectedValue == Classification.SinglePieces)
+                    {
+                        var product = new PieceProduct(name, purchasePrice, salePrice, shelfLife, quantity);
+                        repository.Save(product);
+                    }
                 }
-                if ((Classification)classificationComboBox.SelectedValue == Classification.SinglePieces)
+                else
                 {
-                    var product = new PieceProduct(name, purchasePrice, salePrice, shelfLife, quantity);
-                    repository.Save(product);
+                    if ((Classification)classificationComboBox.SelectedValue == Classification.WeightСlasses)
+                    {
+                        product.Name = name;
+                        product.PurchasePrice = purchasePrice;
+                        product.SalePrice = salePrice;
+                        product.ShelfLife = shelfLife;
+                        product.Count = quantity;
+                        repository.Save(product as WeightProduct);
+                    }
+                    if ((Classification)classificationComboBox.SelectedValue == Classification.SinglePieces)
+                    {
+                        product.Name = name;
+                        product.PurchasePrice = purchasePrice;
+                        product.SalePrice = salePrice;
+                        product.ShelfLife = shelfLife;
+                        product.Count = quantity;
+                        repository.Save(product as PieceProduct);
+                    }
                 }
+                MessageBox.Show("Товар успешно добавлен");
+                Close();
             }
-            else
+            catch (Exception ex)
             {
-                if ((Classification)classificationComboBox.SelectedValue == Classification.WeightСlasses)
-                {
-                    product.Name = name;
-                    product.PurchasePrice = purchasePrice;
-                    product.SalePrice = salePrice;
-                    product.ShelfLife = shelfLife;
-                    product.Count = quantity;
-                    repository.Save(product as WeightProduct);
-                }
-                if ((Classification)classificationComboBox.SelectedValue == Classification.SinglePieces)
-                {
-                    product.Name = name;
-                    product.PurchasePrice = purchasePrice;
-                    product.SalePrice = salePrice;
-                    product.ShelfLife = shelfLife;
-                    product.Count = quantity;
-                    repository.Save(product as PieceProduct);
-                }
-            }
-            MessageBox.Show("Товар успешно добавлен");
-            Close();
-        }
 
+                MessageBox.Show(ex.Message);
+            }
+        }
         private void AddProductForm_Load(object sender, EventArgs e)
         {
             FillComboBox(classificationComboBox);
@@ -112,6 +118,30 @@ namespace GroceryStoreApp
             })
              .OrderBy(item => item.value)
              .ToList();
+        }
+        private void purPriceTextBox_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            char number = e.KeyChar;
+            if (!Char.IsDigit(number) && number != 8 && number != 44) 
+            {
+                e.Handled = true;
+            }
+        }
+        private void salePriceTextBox_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            char number = e.KeyChar;
+            if (!Char.IsDigit(number) && number != 8 && number != 44)
+            {
+                e.Handled = true;
+            }
+        }
+        private void quantityTextBox_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            char number = e.KeyChar;
+            if (!Char.IsDigit(number) && number != 8) 
+            {
+                e.Handled = true;
+            }
         }
     }
 }

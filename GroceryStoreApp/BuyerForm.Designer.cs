@@ -53,6 +53,8 @@ namespace GroceryStoreApp
             // 
             // productsDataGridView
             // 
+            this.productsDataGridView.AllowUserToAddRows = false;
+            this.productsDataGridView.AllowUserToDeleteRows = false;
             this.productsDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.productsDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.nameColumn,
@@ -62,6 +64,7 @@ namespace GroceryStoreApp
             this.classificationColumn});
             this.productsDataGridView.Location = new System.Drawing.Point(12, 30);
             this.productsDataGridView.Name = "productsDataGridView";
+            this.productsDataGridView.ReadOnly = true;
             this.productsDataGridView.RowTemplate.Height = 25;
             this.productsDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.productsDataGridView.Size = new System.Drawing.Size(364, 349);
@@ -71,27 +74,32 @@ namespace GroceryStoreApp
             // 
             this.nameColumn.HeaderText = "Наименование";
             this.nameColumn.Name = "nameColumn";
+            this.nameColumn.ReadOnly = true;
             // 
             // salePriceColumn
             // 
             this.salePriceColumn.HeaderText = "Цена";
             this.salePriceColumn.Name = "salePriceColumn";
+            this.salePriceColumn.ReadOnly = true;
             // 
             // shelfLifeColumn
             // 
             this.shelfLifeColumn.HeaderText = "Срок хранения";
             this.shelfLifeColumn.Name = "shelfLifeColumn";
+            this.shelfLifeColumn.ReadOnly = true;
             // 
             // guidColumn
             // 
             this.guidColumn.HeaderText = "Id";
             this.guidColumn.Name = "guidColumn";
+            this.guidColumn.ReadOnly = true;
             this.guidColumn.Visible = false;
             // 
             // classificationColumn
             // 
             this.classificationColumn.HeaderText = "Категория";
             this.classificationColumn.Name = "classificationColumn";
+            this.classificationColumn.ReadOnly = true;
             this.classificationColumn.Visible = false;
             // 
             // buyButton
@@ -116,6 +124,8 @@ namespace GroceryStoreApp
             // 
             // productsToSaleGridView
             // 
+            this.productsToSaleGridView.AllowUserToAddRows = false;
+            this.productsToSaleGridView.AllowUserToDeleteRows = false;
             this.productsToSaleGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.productsToSaleGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.dataGridViewTextBoxColumn1,
@@ -126,6 +136,7 @@ namespace GroceryStoreApp
             this.quantityColumn});
             this.productsToSaleGridView.Location = new System.Drawing.Point(382, 30);
             this.productsToSaleGridView.Name = "productsToSaleGridView";
+            this.productsToSaleGridView.ReadOnly = true;
             this.productsToSaleGridView.RowTemplate.Height = 25;
             this.productsToSaleGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.productsToSaleGridView.Size = new System.Drawing.Size(444, 349);
@@ -135,33 +146,39 @@ namespace GroceryStoreApp
             // 
             this.dataGridViewTextBoxColumn1.HeaderText = "Наименование";
             this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
+            this.dataGridViewTextBoxColumn1.ReadOnly = true;
             // 
             // dataGridViewTextBoxColumn2
             // 
             this.dataGridViewTextBoxColumn2.HeaderText = "Цена";
             this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
+            this.dataGridViewTextBoxColumn2.ReadOnly = true;
             // 
             // dataGridViewTextBoxColumn3
             // 
             this.dataGridViewTextBoxColumn3.HeaderText = "Срок хранения";
             this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
+            this.dataGridViewTextBoxColumn3.ReadOnly = true;
             // 
             // dataGridViewTextBoxColumn4
             // 
             this.dataGridViewTextBoxColumn4.HeaderText = "Id";
             this.dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
+            this.dataGridViewTextBoxColumn4.ReadOnly = true;
             this.dataGridViewTextBoxColumn4.Visible = false;
             // 
             // dataGridViewTextBoxColumn5
             // 
             this.dataGridViewTextBoxColumn5.HeaderText = "Категория";
             this.dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
+            this.dataGridViewTextBoxColumn5.ReadOnly = true;
             this.dataGridViewTextBoxColumn5.Visible = false;
             // 
             // quantityColumn
             // 
             this.quantityColumn.HeaderText = "Количество";
             this.quantityColumn.Name = "quantityColumn";
+            this.quantityColumn.ReadOnly = true;
             // 
             // productsListLabel
             // 
