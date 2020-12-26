@@ -62,23 +62,6 @@ namespace GroceryStoreApp
             }
 
         }
-
-        private void MoveProductToBasket<T>(T product, Classification classification) where T : BaseProduct
-        {
-            if (product.Count > 0)
-            {
-                if (!IsProductContained(product.Id))
-                {
-                    productsToSaleGridView.Rows.Add(product.Name, product.SalePrice, product.ShelfLife, product.Id, classification, 1);
-                }
-                product.Count--;
-            }
-            else
-            {
-                MessageBox.Show("Товар закончился");
-            }
-        }
-
         private void cashButton_Click(object sender, EventArgs e)
         {
             if (productsToSaleGridView.Rows.Count > 0)
@@ -102,6 +85,14 @@ namespace GroceryStoreApp
                 int rowIndex = productsToSaleGridView.CurrentRow.Index;
                 if (rowIndex != productsToSaleGridView.NewRowIndex)
                 {
+                    if ((Classification)productsToSaleGridView[classificationColumn.Index, rowIndex].Value == Classification.WeightСlasses)
+                    {
+                        MoveProductBack(weightProductsList, rowIndex);
+                    }
+                    if ((Classification)productsToSaleGridView[classificationColumn.Index, rowIndex].Value == Classification.SinglePieces)
+                    {
+                        MoveProductBack(pieceProductsList, rowIndex);
+                    }
                     var quantity = Convert.ToInt32(productsToSaleGridView[quantityColumn.Index, rowIndex].Value);
                     if (quantity > 1)
                     {
@@ -112,6 +103,7 @@ namespace GroceryStoreApp
                     {
                         productsToSaleGridView.Rows.RemoveAt(rowIndex);
                     }
+                    
                 }
                 else
                 {
@@ -145,6 +137,27 @@ namespace GroceryStoreApp
                 }
             }
             return false;
+        }
+        private void MoveProductToBasket<T>(T product, Classification classification) where T : BaseProduct
+        {
+            if (product.Count > 0)
+            {
+                if (!IsProductContained(product.Id))
+                {
+                    productsToSaleGridView.Rows.Add(product.Name, product.SalePrice, product.ShelfLife, product.Id, classification, 1);
+                }
+                product.Count--;
+            }
+            else
+            {
+                MessageBox.Show("Товар закончился");
+            }
+        }
+        private void MoveProductBack <T> (List<T> products, int rowIndex) where T : BaseProduct
+        {
+            Guid guid = (Guid)productsToSaleGridView[guidColumn.Index, rowIndex].Value;
+            int productIndex = weightProductsList.FindIndex(x => x.Id == guid);
+            products[productIndex].Count++;
         }
     }
 }
