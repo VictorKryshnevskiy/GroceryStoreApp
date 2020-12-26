@@ -118,6 +118,10 @@ namespace GroceryStoreApp
             {
                 throw new Exception("Количество товара не может быть отрицательным");
             }
+            if (product.Name.Length < 2)
+            {
+                throw new Exception("Наименование не может короче 2х символов");
+            }
         }
     }
 }

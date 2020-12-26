@@ -29,6 +29,7 @@ namespace GroceryStoreApp
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.nameTextBox = new System.Windows.Forms.TextBox();
             this.purPriceTextBox = new System.Windows.Forms.TextBox();
             this.salePriceTextBox = new System.Windows.Forms.TextBox();
@@ -39,9 +40,11 @@ namespace GroceryStoreApp
             this.saveButton = new System.Windows.Forms.Button();
             this.classificationComboBox = new System.Windows.Forms.ComboBox();
             this.productCategoryLabel = new System.Windows.Forms.Label();
-            this.maskedTextBox1 = new System.Windows.Forms.MaskedTextBox();
+            this.shelfLifeMaskedTextBox = new System.Windows.Forms.MaskedTextBox();
             this.quantityLabel = new System.Windows.Forms.Label();
             this.quantityTextBox = new System.Windows.Forms.TextBox();
+            this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
             this.SuspendLayout();
             // 
             // nameTextBox
@@ -50,6 +53,7 @@ namespace GroceryStoreApp
             this.nameTextBox.Name = "nameTextBox";
             this.nameTextBox.Size = new System.Drawing.Size(221, 23);
             this.nameTextBox.TabIndex = 0;
+            this.nameTextBox.Validating += new System.ComponentModel.CancelEventHandler(this.nameTextBox_Validating);
             // 
             // purPriceTextBox
             // 
@@ -58,6 +62,7 @@ namespace GroceryStoreApp
             this.purPriceTextBox.Size = new System.Drawing.Size(221, 23);
             this.purPriceTextBox.TabIndex = 1;
             this.purPriceTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.purPriceTextBox_KeyPress);
+            this.purPriceTextBox.Validating += new System.ComponentModel.CancelEventHandler(this.purPriceTextBox_Validating);
             // 
             // salePriceTextBox
             // 
@@ -66,6 +71,7 @@ namespace GroceryStoreApp
             this.salePriceTextBox.Size = new System.Drawing.Size(221, 23);
             this.salePriceTextBox.TabIndex = 2;
             this.salePriceTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.salePriceTextBox_KeyPress);
+            this.salePriceTextBox.Validating += new System.ComponentModel.CancelEventHandler(this.salePriceTextBox_Validating);
             // 
             // nameLabel
             // 
@@ -130,14 +136,14 @@ namespace GroceryStoreApp
             this.productCategoryLabel.TabIndex = 10;
             this.productCategoryLabel.Text = "Классификация";
             // 
-            // maskedTextBox1
+            // shelfLifeMaskedTextBox
             // 
-            this.maskedTextBox1.Location = new System.Drawing.Point(159, 128);
-            this.maskedTextBox1.Mask = "00/00/0000";
-            this.maskedTextBox1.Name = "maskedTextBox1";
-            this.maskedTextBox1.Size = new System.Drawing.Size(221, 23);
-            this.maskedTextBox1.TabIndex = 11;
-            this.maskedTextBox1.ValidatingType = typeof(System.DateTime);
+            this.shelfLifeMaskedTextBox.Location = new System.Drawing.Point(159, 128);
+            this.shelfLifeMaskedTextBox.Mask = "00/00/0000";
+            this.shelfLifeMaskedTextBox.Name = "shelfLifeMaskedTextBox";
+            this.shelfLifeMaskedTextBox.Size = new System.Drawing.Size(221, 23);
+            this.shelfLifeMaskedTextBox.TabIndex = 11;
+            this.shelfLifeMaskedTextBox.ValidatingType = typeof(System.DateTime);
             // 
             // quantityLabel
             // 
@@ -155,6 +161,12 @@ namespace GroceryStoreApp
             this.quantityTextBox.Size = new System.Drawing.Size(221, 23);
             this.quantityTextBox.TabIndex = 13;
             this.quantityTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.quantityTextBox_KeyPress);
+            this.quantityTextBox.Validating += new System.ComponentModel.CancelEventHandler(this.quantityTextBox_Validating);
+            // 
+            // errorProvider
+            // 
+            this.errorProvider.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.NeverBlink;
+            this.errorProvider.ContainerControl = this;
             // 
             // AddProductForm
             // 
@@ -163,7 +175,7 @@ namespace GroceryStoreApp
             this.ClientSize = new System.Drawing.Size(482, 373);
             this.Controls.Add(this.quantityTextBox);
             this.Controls.Add(this.quantityLabel);
-            this.Controls.Add(this.maskedTextBox1);
+            this.Controls.Add(this.shelfLifeMaskedTextBox);
             this.Controls.Add(this.productCategoryLabel);
             this.Controls.Add(this.classificationComboBox);
             this.Controls.Add(this.saveButton);
@@ -177,6 +189,7 @@ namespace GroceryStoreApp
             this.Name = "AddProductForm";
             this.Text = "AddProductForm";
             this.Load += new System.EventHandler(this.AddProductForm_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -195,8 +208,9 @@ namespace GroceryStoreApp
         private System.Windows.Forms.TextBox textBox;
         private System.Windows.Forms.ComboBox classificationComboBox;
         private System.Windows.Forms.Label productCategoryLabel;
-        private System.Windows.Forms.MaskedTextBox maskedTextBox1;
+        private System.Windows.Forms.MaskedTextBox shelfLifeMaskedTextBox;
         private System.Windows.Forms.Label quantityLabel;
         private System.Windows.Forms.TextBox quantityTextBox;
+        private System.Windows.Forms.ErrorProvider errorProvider;
     }
 }

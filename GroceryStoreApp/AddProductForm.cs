@@ -36,12 +36,13 @@ namespace GroceryStoreApp
         }
         private void saveButton_Click(object sender, EventArgs e)
         {
+
             try
             {
                 var name = nameTextBox.Text;
                 var purchasePrice = Convert.ToDecimal(purPriceTextBox.Text);
                 var salePrice = Convert.ToDecimal(salePriceTextBox.Text);
-                var shelfLife = Convert.ToDateTime(maskedTextBox1.Text);
+                var shelfLife = Convert.ToDateTime(shelfLifeMaskedTextBox.Text);
                 var quantity = Convert.ToInt32(quantityTextBox.Text);
                 if (!isEditing)
                 {
@@ -80,9 +81,10 @@ namespace GroceryStoreApp
                 MessageBox.Show("Товар успешно добавлен");
                 Close();
             }
+            catch (FormatException )
+            { MessageBox.Show("Убедитесь в правильности заполнения полей, все поля должны быть заполнены"); }
             catch (Exception ex)
             {
-
                 MessageBox.Show(ex.Message);
             }
         }
@@ -102,7 +104,7 @@ namespace GroceryStoreApp
                 nameTextBox.Text = product.Name;
                 purPriceTextBox.Text = product.PurchasePrice.ToString();
                 salePriceTextBox.Text = product.SalePrice.ToString();
-                maskedTextBox1.Text = product.ShelfLife.ToString();
+                shelfLifeMaskedTextBox.Text = product.ShelfLife.ToString();
                 quantityTextBox.Text = product.Count.ToString();
                 classificationComboBox.SelectedValue = classification;
             }
@@ -142,6 +144,37 @@ namespace GroceryStoreApp
             {
                 e.Handled = true;
             }
+        }
+
+        private void nameTextBox_Validating(object sender, CancelEventArgs e)
+        {
+            if (nameTextBox.Text.Trim() == "")
+                errorProvider.SetError(nameTextBox, "Введите значение");
+            else
+                errorProvider.SetError(nameTextBox, "");
+        }
+
+        private void purPriceTextBox_Validating(object sender, CancelEventArgs e)
+        {
+            if (purPriceTextBox.Text.Trim() == "")
+                errorProvider.SetError(purPriceTextBox, "Введите значение");
+            else
+                errorProvider.SetError(purPriceTextBox, "");
+        }
+
+        private void salePriceTextBox_Validating(object sender, CancelEventArgs e)
+        {
+            if (salePriceTextBox.Text.Trim() == "")
+                errorProvider.SetError(salePriceTextBox, "Введите значение");
+            else
+                errorProvider.SetError(salePriceTextBox, "");
+        }
+        private void quantityTextBox_Validating(object sender, CancelEventArgs e)
+        {
+            if (quantityTextBox.Text.Trim() == "")
+                errorProvider.SetError(quantityTextBox, "Введите значение");
+            else
+                errorProvider.SetError(quantityTextBox, "");
         }
     }
 }
