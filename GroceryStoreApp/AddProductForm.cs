@@ -2,21 +2,33 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace GroceryStoreApp
 {
     public partial class AddProductForm : Form
     {
-        string docpath;
-        public AddProductForm(string file)
+        IProductRepository repository;
+        string weightProductsPath;
+        string pieceProductsPath;
+        bool isEditing;
+        BaseProduct product;
+        public AddProductForm(string weight, string piece)
+        {
+            repository = new ProductFileRepository();
+            InitializeComponent();
+            weightProductsPath = weight;
+            pieceProductsPath = piece;
+            isEditing = false;
+        }
+        public AddProductForm(string weight, string piece, BaseProduct product)
         {
             InitializeComponent();
-            docpath = file;
+            weightProductsPath = weight;
+            pieceProductsPath = piece;
+            isEditing = true;
+            this.product = product;
         }
 
         private void saveButton_Click(object sender, EventArgs e)
@@ -28,29 +40,40 @@ namespace GroceryStoreApp
             var quantity = Convert.ToInt32(quantityTextBox.Text);
             if ((Classification)classificationComboBox.SelectedValue == Classification.WeightСlasses)
             {
-                var jsonString = FileSystem.ReadAllText(docpath);
-                var products = JsonHelper.Deserialize<List<WeightProduct>>(jsonString);
                 var product = new WeightProduct(name, purchasePrice, salePrice, shelfLife, quantity);
-                products.Add(product);
-                jsonString = JsonHelper.Serialize(product);
-                FileSystem.WriteAllText(docpath, jsonString);
+                repository.Save(product);
             }
             if ((Classification)classificationComboBox.SelectedValue == Classification.SinglePieces)
             {
-                var jsonString = FileSystem.ReadAllText(docpath);
-                var products = JsonHelper.Deserialize<List<PieceProduct>>(jsonString);
                 var product = new PieceProduct(name, purchasePrice, salePrice, shelfLife, quantity);
-                products.Add(product);
-                jsonString = JsonHelper.Serialize(product);
-                FileSystem.WriteAllText(docpath, jsonString);
+                repository.Save(product);
             }
+            MessageBox.Show("Товар успешно добавлен");
+            Close();
         }
 
         private void AddProductForm_Load(object sender, EventArgs e)
         {
             FillComboBox(classificationComboBox);
+            if (isEditing)
+            {
+                LoadProductInformation();
+            }
         }
-        private void FillComboBox(ComboBox comboBox)
+
+        private void LoadProductInformation()
+        {
+            if (product != null)
+            {
+                nameTextBox.Text = product.Name;
+                purPriceTextBox.Text = product.PurchasePrice.ToString();
+                salePriceTextBox.Text = product.SalePrice.ToString();
+                maskedTextBox1.Text = product.ShelfLife.ToString();
+              // quantityTextBox.Text= product.
+            }
+        }
+
+        private static void FillComboBox(ComboBox comboBox)
         {
             comboBox.DisplayMember = "Description";
             comboBox.ValueMember = "Value";

@@ -1,21 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GroceryStoreApp
 {
-    class PieceProduct : BaseProduct
+    public class PieceProduct : BaseProduct
     {
         public int Count { get; set;}
-        public PieceProduct(string name, decimal purchasePrice, decimal salePrice, DateTime shelfLife, int count)
+        
+        public PieceProduct(string name, decimal purchasePrice, decimal salePrice, DateTime shelfLife, int count, string storage = "items"): base(name, purchasePrice, salePrice, shelfLife, storage)
         {
-            Name = name;
-            PurchasePrice = purchasePrice;
-            SalePrice = salePrice;
-            ShelfLife = shelfLife;
             Count = count;
+            Storage = storage;
         }
         //для десериализации
         public PieceProduct()

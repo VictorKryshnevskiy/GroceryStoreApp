@@ -5,26 +5,29 @@ namespace GroceryStoreApp
 {
     public partial class BuyerForm : Form
     {
-        readonly string docPath;
+        string weightProducts;
+        string pieceProducts;
+
         public BuyerForm()
         {
             InitializeComponent();
         }
-        public BuyerForm(string file)
+        public BuyerForm(string weight, string piece)
         {
-            docPath = file;
+            weightProducts = weight;
+            pieceProducts = piece;
             InitializeComponent();
         }
 
         private void BuyerForm_Load(object sender, EventArgs e)
         {
-            if (FileSystem.IsExist(docPath))
+            if (FileSystem.IsExist(weightProducts))
             {
 
             }
             else
             {
-                FileSystem.Create(docPath);
+                FileSystem.Create(weightProducts);
             }
         }
     }

@@ -5,7 +5,8 @@ namespace GroceryStoreApp
 {
     public partial class MainForm : Form
     {
-        const string docPath = "Shop.json";
+        const string weightProducts = "weightProducts.json";
+        const string pieceProducts = "pieceProducts.json";
         public MainForm()
         {
             InitializeComponent();
@@ -17,15 +18,13 @@ namespace GroceryStoreApp
             {
                 if (selectUserComboBox.Text == "Покупатель")
                 {
-                    BuyerForm buyerForm = new BuyerForm(docPath);
+                    BuyerForm buyerForm = new BuyerForm(weightProducts, pieceProducts);
                     buyerForm.ShowDialog();
                 }
                 if (selectUserComboBox.Text == "Продавец")
                 {
-                    SalerForm salerForm = new SalerForm(docPath);
+                    SalerForm salerForm = new SalerForm(weightProducts, pieceProducts);
                     salerForm.Show();
-                    salerForm.Activate();
-                    salerForm.BringToFront();
                 }
             }
         }

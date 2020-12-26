@@ -30,12 +30,16 @@ namespace GroceryStoreApp
         private void InitializeComponent()
         {
             this.productsDataGridView = new System.Windows.Forms.DataGridView();
+            this.addProductButton = new System.Windows.Forms.Button();
+            this.deleteProductButton = new System.Windows.Forms.Button();
             this.nameColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.purchasePriceColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.salePriceColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.shelfLifeColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.addProductButton = new System.Windows.Forms.Button();
-            this.deleteProductButton = new System.Windows.Forms.Button();
+            this.quantityColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.storageColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.guidColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.categoryColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.productsDataGridView)).BeginInit();
             this.SuspendLayout();
             // 
@@ -46,12 +50,39 @@ namespace GroceryStoreApp
             this.nameColumn,
             this.purchasePriceColumn,
             this.salePriceColumn,
-            this.shelfLifeColumn});
-            this.productsDataGridView.Location = new System.Drawing.Point(12, 12);
+            this.shelfLifeColumn,
+            this.quantityColumn,
+            this.storageColumn,
+            this.guidColumn,
+            this.categoryColumn});
+            this.productsDataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.productsDataGridView.Location = new System.Drawing.Point(0, 0);
             this.productsDataGridView.Name = "productsDataGridView";
             this.productsDataGridView.RowTemplate.Height = 25;
-            this.productsDataGridView.Size = new System.Drawing.Size(766, 349);
+            this.productsDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.productsDataGridView.Size = new System.Drawing.Size(800, 450);
             this.productsDataGridView.TabIndex = 2;
+            this.productsDataGridView.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.productsDataGridView_CellDoubleClick);
+            // 
+            // addProductButton
+            // 
+            this.addProductButton.Location = new System.Drawing.Point(610, 399);
+            this.addProductButton.Name = "addProductButton";
+            this.addProductButton.Size = new System.Drawing.Size(86, 39);
+            this.addProductButton.TabIndex = 3;
+            this.addProductButton.Text = "Добавить товар";
+            this.addProductButton.UseVisualStyleBackColor = true;
+            this.addProductButton.Click += new System.EventHandler(this.addProductButton_Click);
+            // 
+            // deleteProductButton
+            // 
+            this.deleteProductButton.Location = new System.Drawing.Point(702, 400);
+            this.deleteProductButton.Name = "deleteProductButton";
+            this.deleteProductButton.Size = new System.Drawing.Size(86, 38);
+            this.deleteProductButton.TabIndex = 4;
+            this.deleteProductButton.Text = "Удалить товар";
+            this.deleteProductButton.UseVisualStyleBackColor = true;
+            this.deleteProductButton.Click += new System.EventHandler(this.deleteProductButton_Click);
             // 
             // nameColumn
             // 
@@ -73,24 +104,27 @@ namespace GroceryStoreApp
             this.shelfLifeColumn.HeaderText = "Срок хранения";
             this.shelfLifeColumn.Name = "shelfLifeColumn";
             // 
-            // addProductButton
+            // quantityColumn
             // 
-            this.addProductButton.Location = new System.Drawing.Point(610, 399);
-            this.addProductButton.Name = "addProductButton";
-            this.addProductButton.Size = new System.Drawing.Size(86, 39);
-            this.addProductButton.TabIndex = 3;
-            this.addProductButton.Text = "Добавить товар";
-            this.addProductButton.UseVisualStyleBackColor = true;
-            this.addProductButton.Click += new System.EventHandler(this.addProductButton_Click);
+            this.quantityColumn.HeaderText = "Остатки товара";
+            this.quantityColumn.Name = "quantityColumn";
             // 
-            // deleteProductButton
+            // storageColumn
             // 
-            this.deleteProductButton.Location = new System.Drawing.Point(702, 400);
-            this.deleteProductButton.Name = "deleteProductButton";
-            this.deleteProductButton.Size = new System.Drawing.Size(86, 38);
-            this.deleteProductButton.TabIndex = 4;
-            this.deleteProductButton.Text = "Удалить товар";
-            this.deleteProductButton.UseVisualStyleBackColor = true;
+            this.storageColumn.HeaderText = "Измерение";
+            this.storageColumn.Name = "storageColumn";
+            // 
+            // guidColumn
+            // 
+            this.guidColumn.HeaderText = "Guid";
+            this.guidColumn.Name = "guidColumn";
+            this.guidColumn.Visible = false;
+            // 
+            // categoryColumn
+            // 
+            this.categoryColumn.HeaderText = "Классификация";
+            this.categoryColumn.Name = "categoryColumn";
+            this.categoryColumn.Visible = false;
             // 
             // SalerForm
             // 
@@ -117,5 +151,9 @@ namespace GroceryStoreApp
         private System.Windows.Forms.DataGridViewTextBoxColumn purchasePriceColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn salePriceColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn shelfLifeColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn quantityColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn storageColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn guidColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn categoryColumn;
     }
 }
