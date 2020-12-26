@@ -37,7 +37,7 @@ namespace GroceryStoreApp
             // selectUserLabel
             // 
             this.selectUserLabel.AutoSize = true;
-            this.selectUserLabel.Location = new System.Drawing.Point(316, 120);
+            this.selectUserLabel.Location = new System.Drawing.Point(88, 99);
             this.selectUserLabel.Name = "selectUserLabel";
             this.selectUserLabel.Size = new System.Drawing.Size(64, 15);
             this.selectUserLabel.TabIndex = 0;
@@ -45,20 +45,21 @@ namespace GroceryStoreApp
             // 
             // selectUserComboBox
             // 
+            this.selectUserComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.selectUserComboBox.FormattingEnabled = true;
             this.selectUserComboBox.Items.AddRange(new object[] {
             "Покупатель",
             "Продавец"});
-            this.selectUserComboBox.Location = new System.Drawing.Point(316, 153);
+            this.selectUserComboBox.Location = new System.Drawing.Point(88, 132);
             this.selectUserComboBox.Name = "selectUserComboBox";
-            this.selectUserComboBox.Size = new System.Drawing.Size(121, 23);
+            this.selectUserComboBox.Size = new System.Drawing.Size(116, 23);
             this.selectUserComboBox.TabIndex = 1;
             // 
             // confirmUserButton
             // 
-            this.confirmUserButton.Location = new System.Drawing.Point(316, 201);
+            this.confirmUserButton.Location = new System.Drawing.Point(88, 180);
             this.confirmUserButton.Name = "confirmUserButton";
-            this.confirmUserButton.Size = new System.Drawing.Size(75, 23);
+            this.confirmUserButton.Size = new System.Drawing.Size(116, 23);
             this.confirmUserButton.TabIndex = 2;
             this.confirmUserButton.Text = "Далее";
             this.confirmUserButton.UseVisualStyleBackColor = true;
@@ -68,12 +69,13 @@ namespace GroceryStoreApp
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(299, 296);
             this.Controls.Add(this.confirmUserButton);
             this.Controls.Add(this.selectUserComboBox);
             this.Controls.Add(this.selectUserLabel);
             this.Name = "MainForm";
             this.Text = "MainForm";
+            this.Load += new System.EventHandler(this.MainForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

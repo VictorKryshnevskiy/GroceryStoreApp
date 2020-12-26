@@ -19,15 +19,20 @@ namespace GroceryStoreApp
             weightProductsList = repository.GetWeightProducts();
             foreach (var product in weightProductsList)
             {
-                productsDataGridView.Rows.Add(product.Name, product.SalePrice, product.ShelfLife, product.Id, Classification.WeightСlasses);
+                if (product.Count >= 1)
+                {
+                    productsDataGridView.Rows.Add(product.Name, product.SalePrice, product.ShelfLife, product.Id, Classification.WeightСlasses);
+                }
             }
             pieceProductsList = repository.GetPieceProducts();
             foreach (var product in pieceProductsList)
             {
-                productsDataGridView.Rows.Add(product.Name, product.SalePrice, product.ShelfLife, product.Id, Classification.SinglePieces);
+                if (product.Count >= 1)
+                {
+                    productsDataGridView.Rows.Add(product.Name, product.SalePrice, product.ShelfLife, product.Id, Classification.SinglePieces);
+                }
             }
         }
-
         private void buyButton_Click(object sender, EventArgs e)
         {
             if (productsDataGridView.CurrentRow != null)
@@ -38,18 +43,12 @@ namespace GroceryStoreApp
                     if ((Classification)productsDataGridView[classificationColumn.Name, rowIndex].Value == Classification.WeightСlasses)
                     {
                         var product = weightProductsList[FindIndexInArray(rowIndex, weightProductsList)];
-                        if (!IsProductContained(product.Id))
-                        {
-                            productsToSaleGridView.Rows.Add(product.Name, product.SalePrice, product.ShelfLife, product.Id, Classification.WeightСlasses, 1);
-                        }
+                        MoveProductToBasket(product, Classification.WeightСlasses);
                     }
                     if ((Classification)productsDataGridView[classificationColumn.Name, rowIndex].Value == Classification.SinglePieces)
                     {
                         var product = pieceProductsList[FindIndexInArray(rowIndex, pieceProductsList)];
-                        if (!IsProductContained(product.Id))
-                        {
-                            productsToSaleGridView.Rows.Add(product.Name, product.SalePrice, product.ShelfLife, product.Id, Classification.SinglePieces, 1);
-                        }
+                        MoveProductToBasket(product, Classification.SinglePieces);
                     }
                 }
                 else
@@ -63,12 +62,32 @@ namespace GroceryStoreApp
             }
 
         }
+
+        private void MoveProductToBasket<T>(T product, Classification classification) where T : BaseProduct
+        {
+            if (product.Count > 0)
+            {
+                if (!IsProductContained(product.Id))
+                {
+                    productsToSaleGridView.Rows.Add(product.Name, product.SalePrice, product.ShelfLife, product.Id, classification, 1);
+                }
+                product.Count--;
+            }
+            else
+            {
+                MessageBox.Show("Товар закончился");
+            }
+        }
+
         private void cashButton_Click(object sender, EventArgs e)
         {
-            if (productsToSaleGridView.Rows.Count > 1)
+            if (productsToSaleGridView.Rows.Count > 0)
             {
+                repository.Update(weightProductsList);
+                repository.Update(pieceProductsList);
                 productsToSaleGridView.Rows.Clear();
                 MessageBox.Show("Спасибо за покупку!");
+                Refresh();
             }
             else
             {
@@ -98,13 +117,12 @@ namespace GroceryStoreApp
                 {
                     MessageBox.Show("Не выбран товар для удаления");
                 }
-                
             }
             else
             {
                 MessageBox.Show("Не выбран товар для удаления");
             }
-            
+
         }
         private int FindIndexInArray<T>(int indexInTable, List<T> products) where T : BaseProduct
         {
@@ -113,9 +131,9 @@ namespace GroceryStoreApp
         }
         private bool IsProductContained(Guid id)
         {
-            if (productsToSaleGridView.Rows.Count > 1)
+            if (productsToSaleGridView.Rows.Count > 0)
             {
-                for (int i = 0; i < productsToSaleGridView.Rows.Count - 1; i++)
+                for (int i = 0; i < productsToSaleGridView.Rows.Count; i++)
                 {
                     if (productsToSaleGridView[guidColumn.Index, i].Value.ToString() == id.ToString())
                     {

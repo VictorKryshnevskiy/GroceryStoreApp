@@ -114,6 +114,10 @@ namespace GroceryStoreApp
             {
                 throw new Exception("Наименование не может быть длинее 100 символов");
             }
+            if (product.Count < 0)
+            {
+                throw new Exception("Количество товара не может быть отрицательным");
+            }
         }
     }
 }
