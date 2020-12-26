@@ -47,6 +47,7 @@ namespace GroceryStoreApp
             if ((Classification)productsDataGridView[categoryColumn.Name, rowIndex].Value == Classification.WeightСlasses)
             {
                 DeleteProduct(rowIndex, weightProductsList);
+                return;
             }
             if ((Classification)productsDataGridView[categoryColumn.Name, rowIndex].Value == Classification.SinglePieces)
             {
