@@ -10,7 +10,8 @@ namespace GroceryStoreApp
         public decimal SalePrice { get; set; }
         public DateTime ShelfLife { get; set; }
         public string Storage { get; set; }
-        public BaseProduct(string name, decimal purchasePrice, decimal salePrice, DateTime shelfLife, string storage)
+        public int Count { get; set; }
+        public BaseProduct(string name, decimal purchasePrice, decimal salePrice, DateTime shelfLife, string storage, int count)
         {
             Id = Guid.NewGuid();
             Name = name;
@@ -18,6 +19,7 @@ namespace GroceryStoreApp
             SalePrice = salePrice;
             ShelfLife = shelfLife;
             Storage = storage;
+            Count = count;
         }
         public BaseProduct()
         {

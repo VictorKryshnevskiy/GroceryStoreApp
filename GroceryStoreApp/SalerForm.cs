@@ -9,16 +9,8 @@ namespace GroceryStoreApp
         IProductRepository repository;
         List<WeightProduct> weightProductsList;
         List<PieceProduct> pieceProductsList;
-        string weightProductsPath;
-        string pieceProductsPath;
         public SalerForm()
         {
-            InitializeComponent();
-        }
-        public SalerForm(string weight, string piece)
-        {
-            weightProductsPath = weight;
-            pieceProductsPath = piece;
             InitializeComponent();
         }
         private void SalerForm_Load(object sender, EventArgs e)
@@ -27,7 +19,7 @@ namespace GroceryStoreApp
             weightProductsList = repository.GetWeightProducts();
             foreach (var item in weightProductsList)
             {
-                productsDataGridView.Rows.Add(item.Name, item.PurchasePrice, item.SalePrice, item.ShelfLife, item.Weight, item.Storage, item.Id, Classification.WeightСlasses);
+                productsDataGridView.Rows.Add(item.Name, item.PurchasePrice, item.SalePrice, item.ShelfLife, item.Count, item.Storage, item.Id, Classification.WeightСlasses);
             }
             pieceProductsList = repository.GetPieceProducts();
             foreach (var item in pieceProductsList)
@@ -38,7 +30,7 @@ namespace GroceryStoreApp
         }
         private void addProductButton_Click(object sender, EventArgs e)
         {
-            AddProductForm addProductForm = new AddProductForm(weightProductsPath, pieceProductsPath);
+            AddProductForm addProductForm = new AddProductForm();
             addProductForm.ShowDialog();
         }
         private void deleteProductButton_Click(object sender, EventArgs e)
@@ -76,8 +68,16 @@ namespace GroceryStoreApp
         private void GetProductToEdit<T>(int indexInTable, List<T> products) where T : BaseProduct
         {
             int indexToEdit = FindIndexInArray(indexInTable, products);
-            AddProductForm addProductForm = new AddProductForm(weightProductsPath, pieceProductsPath, pieceProductsList[indexToEdit]);
-            addProductForm.ShowDialog();
+            if (products is List<PieceProduct>)
+            {
+                AddProductForm addProductForm = new AddProductForm(pieceProductsList[indexToEdit]);
+                addProductForm.ShowDialog();
+            }
+            if (products is List<WeightProduct>)
+            {
+                AddProductForm addProductForm = new AddProductForm(weightProductsList[indexToEdit]);
+                addProductForm.ShowDialog();
+            }
         }
 
         private int FindIndexInArray<T>(int indexInTable, List<T> products) where T : BaseProduct

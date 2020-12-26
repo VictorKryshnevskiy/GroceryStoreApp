@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+using System.Collections.Generic;
 
 namespace GroceryStoreApp
 {
@@ -11,12 +8,6 @@ namespace GroceryStoreApp
     {
         public const string weightProductsPath = "weightProducts.json";
         public const string pieceProductsPath = "pieceProducts.json";
-
-        public void Delete<T>(T product) where T : BaseProduct
-        {
-
-        }
-
         public List<WeightProduct> GetWeightProducts()
         {
             if (FileSystem.IsExist(weightProductsPath))
@@ -80,7 +71,15 @@ namespace GroceryStoreApp
             {
                 var jsonString = FileSystem.ReadAllText(fileName);
                 var products = JsonHelper.Deserialize<List<T>>(jsonString);
-                products.Add(product);
+                if (products.Exists(x => x.Id == product.Id))
+                {
+                    int index = products.FindIndex(x => x.Id == product.Id);
+                    products[index] = product;
+                }
+                else
+                {
+                    products.Add(product);
+                }
                 jsonString = JsonHelper.Serialize(products);
                 FileSystem.WriteAllText(fileName, jsonString);
             }
@@ -89,14 +88,6 @@ namespace GroceryStoreApp
 
                 throw;
             }
-        }
-        public void Save<T>(List<T> products) where T : BaseProduct
-        {
-            throw new NotImplementedException();
-        }
-        public void Update<T>(T product) where T : BaseProduct
-        {
-            throw new NotImplementedException();
         }
         public void Update<T>(List<T> products) where T : BaseProduct
         {

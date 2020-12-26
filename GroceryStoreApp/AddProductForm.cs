@@ -10,27 +10,31 @@ namespace GroceryStoreApp
     public partial class AddProductForm : Form
     {
         IProductRepository repository;
-        string weightProductsPath;
-        string pieceProductsPath;
         bool isEditing;
         BaseProduct product;
-        public AddProductForm(string weight, string piece)
+        Classification classification;
+        public AddProductForm()
         {
-            repository = new ProductFileRepository();
             InitializeComponent();
-            weightProductsPath = weight;
-            pieceProductsPath = piece;
+            repository = new ProductFileRepository();
             isEditing = false;
         }
-        public AddProductForm(string weight, string piece, BaseProduct product)
+        public AddProductForm(PieceProduct product)
         {
             InitializeComponent();
-            weightProductsPath = weight;
-            pieceProductsPath = piece;
+            repository = new ProductFileRepository();
             isEditing = true;
             this.product = product;
+            classification = Classification.SinglePieces;
         }
-
+        public AddProductForm(WeightProduct product)
+        {
+            InitializeComponent();
+            repository = new ProductFileRepository();
+            isEditing = true;
+            this.product = product;
+            classification = Classification.WeightСlasses;
+        }
         private void saveButton_Click(object sender, EventArgs e)
         {
             var name = nameTextBox.Text;
@@ -38,15 +42,39 @@ namespace GroceryStoreApp
             var salePrice = Convert.ToDecimal(salePriceTextBox.Text);
             var shelfLife = Convert.ToDateTime(maskedTextBox1.Text);
             var quantity = Convert.ToInt32(quantityTextBox.Text);
-            if ((Classification)classificationComboBox.SelectedValue == Classification.WeightСlasses)
+            if (!isEditing)
             {
-                var product = new WeightProduct(name, purchasePrice, salePrice, shelfLife, quantity);
-                repository.Save(product);
+                if ((Classification)classificationComboBox.SelectedValue == Classification.WeightСlasses)
+                {
+                    var product = new WeightProduct(name, purchasePrice, salePrice, shelfLife, quantity);
+                    repository.Save(product);
+                }
+                if ((Classification)classificationComboBox.SelectedValue == Classification.SinglePieces)
+                {
+                    var product = new PieceProduct(name, purchasePrice, salePrice, shelfLife, quantity);
+                    repository.Save(product);
+                }
             }
-            if ((Classification)classificationComboBox.SelectedValue == Classification.SinglePieces)
+            else
             {
-                var product = new PieceProduct(name, purchasePrice, salePrice, shelfLife, quantity);
-                repository.Save(product);
+                if ((Classification)classificationComboBox.SelectedValue == Classification.WeightСlasses)
+                {
+                    product.Name = name;
+                    product.PurchasePrice = purchasePrice;
+                    product.SalePrice = salePrice;
+                    product.ShelfLife = shelfLife;
+                    product.Count = quantity;
+                    repository.Save(product as WeightProduct);
+                }
+                if ((Classification)classificationComboBox.SelectedValue == Classification.SinglePieces)
+                {
+                    product.Name = name;
+                    product.PurchasePrice = purchasePrice;
+                    product.SalePrice = salePrice;
+                    product.ShelfLife = shelfLife;
+                    product.Count = quantity;
+                    repository.Save(product as PieceProduct);
+                }
             }
             MessageBox.Show("Товар успешно добавлен");
             Close();
@@ -69,10 +97,10 @@ namespace GroceryStoreApp
                 purPriceTextBox.Text = product.PurchasePrice.ToString();
                 salePriceTextBox.Text = product.SalePrice.ToString();
                 maskedTextBox1.Text = product.ShelfLife.ToString();
-              // quantityTextBox.Text= product.
+                quantityTextBox.Text = product.Count.ToString();
+                classificationComboBox.SelectedValue = classification;
             }
         }
-
         private static void FillComboBox(ComboBox comboBox)
         {
             comboBox.DisplayMember = "Description";

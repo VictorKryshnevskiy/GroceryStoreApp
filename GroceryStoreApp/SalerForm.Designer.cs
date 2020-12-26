@@ -30,8 +30,6 @@ namespace GroceryStoreApp
         private void InitializeComponent()
         {
             this.productsDataGridView = new System.Windows.Forms.DataGridView();
-            this.addProductButton = new System.Windows.Forms.Button();
-            this.deleteProductButton = new System.Windows.Forms.Button();
             this.nameColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.purchasePriceColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.salePriceColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -40,6 +38,8 @@ namespace GroceryStoreApp
             this.storageColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.guidColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.categoryColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.addProductButton = new System.Windows.Forms.Button();
+            this.deleteProductButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.productsDataGridView)).BeginInit();
             this.SuspendLayout();
             // 
@@ -58,11 +58,62 @@ namespace GroceryStoreApp
             this.productsDataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.productsDataGridView.Location = new System.Drawing.Point(0, 0);
             this.productsDataGridView.Name = "productsDataGridView";
+            this.productsDataGridView.ReadOnly = true;
             this.productsDataGridView.RowTemplate.Height = 25;
             this.productsDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.productsDataGridView.Size = new System.Drawing.Size(800, 450);
             this.productsDataGridView.TabIndex = 2;
             this.productsDataGridView.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.productsDataGridView_CellDoubleClick);
+            // 
+            // nameColumn
+            // 
+            this.nameColumn.HeaderText = "Наименование";
+            this.nameColumn.Name = "nameColumn";
+            this.nameColumn.ReadOnly = true;
+            // 
+            // purchasePriceColumn
+            // 
+            this.purchasePriceColumn.HeaderText = "Закупочная цена";
+            this.purchasePriceColumn.Name = "purchasePriceColumn";
+            this.purchasePriceColumn.ReadOnly = true;
+            // 
+            // salePriceColumn
+            // 
+            this.salePriceColumn.HeaderText = "Розничная цена";
+            this.salePriceColumn.Name = "salePriceColumn";
+            this.salePriceColumn.ReadOnly = true;
+            // 
+            // shelfLifeColumn
+            // 
+            this.shelfLifeColumn.HeaderText = "Срок хранения";
+            this.shelfLifeColumn.Name = "shelfLifeColumn";
+            this.shelfLifeColumn.ReadOnly = true;
+            // 
+            // quantityColumn
+            // 
+            this.quantityColumn.HeaderText = "Остатки товара";
+            this.quantityColumn.Name = "quantityColumn";
+            this.quantityColumn.ReadOnly = true;
+            // 
+            // storageColumn
+            // 
+            this.storageColumn.HeaderText = "Измерение";
+            this.storageColumn.Name = "storageColumn";
+            this.storageColumn.ReadOnly = true;
+            // 
+            // guidColumn
+            // 
+            this.guidColumn.HeaderText = "Guid";
+            this.guidColumn.Name = "guidColumn";
+            this.guidColumn.ReadOnly = true;
+            this.guidColumn.Visible = false;
+            // 
+            // categoryColumn
+            // 
+            this.categoryColumn.HeaderText = "Классификация";
+            this.categoryColumn.Name = "categoryColumn";
+            this.categoryColumn.ReadOnly = true;
+            this.categoryColumn.Visible = false;
             // 
             // addProductButton
             // 
@@ -83,48 +134,6 @@ namespace GroceryStoreApp
             this.deleteProductButton.Text = "Удалить товар";
             this.deleteProductButton.UseVisualStyleBackColor = true;
             this.deleteProductButton.Click += new System.EventHandler(this.deleteProductButton_Click);
-            // 
-            // nameColumn
-            // 
-            this.nameColumn.HeaderText = "Наименование";
-            this.nameColumn.Name = "nameColumn";
-            // 
-            // purchasePriceColumn
-            // 
-            this.purchasePriceColumn.HeaderText = "Закупочная цена";
-            this.purchasePriceColumn.Name = "purchasePriceColumn";
-            // 
-            // salePriceColumn
-            // 
-            this.salePriceColumn.HeaderText = "Розничная цена";
-            this.salePriceColumn.Name = "salePriceColumn";
-            // 
-            // shelfLifeColumn
-            // 
-            this.shelfLifeColumn.HeaderText = "Срок хранения";
-            this.shelfLifeColumn.Name = "shelfLifeColumn";
-            // 
-            // quantityColumn
-            // 
-            this.quantityColumn.HeaderText = "Остатки товара";
-            this.quantityColumn.Name = "quantityColumn";
-            // 
-            // storageColumn
-            // 
-            this.storageColumn.HeaderText = "Измерение";
-            this.storageColumn.Name = "storageColumn";
-            // 
-            // guidColumn
-            // 
-            this.guidColumn.HeaderText = "Guid";
-            this.guidColumn.Name = "guidColumn";
-            this.guidColumn.Visible = false;
-            // 
-            // categoryColumn
-            // 
-            this.categoryColumn.HeaderText = "Классификация";
-            this.categoryColumn.Name = "categoryColumn";
-            this.categoryColumn.Visible = false;
             // 
             // SalerForm
             // 
