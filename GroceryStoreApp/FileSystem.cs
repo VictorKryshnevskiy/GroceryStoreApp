@@ -24,5 +24,9 @@ namespace GroceryStoreApp
         {
             File.WriteAllText(fileName, value);
         }
+        public static bool IsFileEmpty(string file)
+        {
+            return File.ReadAllText(file).Length == 0;
+        }
     }
 }
