@@ -1,12 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace GroceryStoreApp
 {
-    public interface IProductRepository
+    public interface IProductRepository<T> where T: BaseProduct
     {
-        List<WeightProduct> GetWeightProducts();
-        List<PieceProduct> GetPieceProducts();
-        void Save<T>(T product) where T : BaseProduct;
-        void Update<T>(List<T> products) where T : BaseProduct;
+        List<T> GetProducts();
+        void Save(T product);
+        void Update(List<T> products);
     }
 }

@@ -6,7 +6,8 @@ namespace GroceryStoreApp
 {
     public partial class BuyerForm : Form
     {
-        IProductRepository repository;
+        IProductRepository<WeightProduct> weightRepository;
+        IProductRepository<PieceProduct> pieceRepository;
         List<WeightProduct> weightProductsList;
         List<PieceProduct> pieceProductsList;
         public BuyerForm()
@@ -15,8 +16,9 @@ namespace GroceryStoreApp
         }
         private void BuyerForm_Load(object sender, EventArgs e)
         {
-            repository = new ProductFileRepository();
-            weightProductsList = repository.GetWeightProducts();
+            weightRepository = new WeightProductRepository();
+            pieceRepository = new PieceProductsRepository();
+            weightProductsList = weightRepository.GetProducts();
             foreach (var product in weightProductsList)
             {
                 if (product.Count >= 1)
@@ -24,7 +26,7 @@ namespace GroceryStoreApp
                     productsDataGridView.Rows.Add(product.Name, product.SalePrice, product.ShelfLife, product.Id, Classification.WeightСlasses);
                 }
             }
-            pieceProductsList = repository.GetPieceProducts();
+            pieceProductsList = pieceRepository.GetProducts();
             foreach (var product in pieceProductsList)
             {
                 if (product.Count >= 1)
@@ -33,7 +35,7 @@ namespace GroceryStoreApp
                 }
             }
         }
-        private void buyButton_Click(object sender, EventArgs e)
+        private void BuyButton_Click(object sender, EventArgs e)
         {
             if (productsDataGridView.CurrentRow != null)
             {
@@ -62,12 +64,12 @@ namespace GroceryStoreApp
             }
 
         }
-        private void cashButton_Click(object sender, EventArgs e)
+        private void CashButton_Click(object sender, EventArgs e)
         {
             if (productsToSaleGridView.Rows.Count > 0)
             {
-                repository.Update(weightProductsList);
-                repository.Update(pieceProductsList);
+                weightRepository.Update(weightProductsList);
+                pieceRepository.Update(pieceProductsList);
                 productsToSaleGridView.Rows.Clear();
                 MessageBox.Show("Спасибо за покупку!");
                 Refresh();
@@ -78,7 +80,7 @@ namespace GroceryStoreApp
             }
         }
 
-        private void deleteButton_Click(object sender, EventArgs e)
+        private void DeleteButton_Click(object sender, EventArgs e)
         {
             if (productsToSaleGridView.CurrentRow != null)
             {
@@ -103,7 +105,7 @@ namespace GroceryStoreApp
                     {
                         productsToSaleGridView.Rows.RemoveAt(rowIndex);
                     }
-                    
+
                 }
                 else
                 {
@@ -153,7 +155,7 @@ namespace GroceryStoreApp
                 MessageBox.Show("Товар закончился");
             }
         }
-        private void MoveProductBack <T> (List<T> products, int rowIndex) where T : BaseProduct
+        private void MoveProductBack<T>(List<T> products, int rowIndex) where T : BaseProduct
         {
             Guid guid = (Guid)productsToSaleGridView[guidColumn.Index, rowIndex].Value;
             int productIndex = weightProductsList.FindIndex(x => x.Id == guid);

@@ -110,7 +110,7 @@ namespace GroceryStoreApp
             this.buyButton.TabIndex = 5;
             this.buyButton.Text = "Купить";
             this.buyButton.UseVisualStyleBackColor = true;
-            this.buyButton.Click += new System.EventHandler(this.buyButton_Click);
+            this.buyButton.Click += new System.EventHandler(this.BuyButton_Click);
             // 
             // cashButton
             // 
@@ -120,7 +120,7 @@ namespace GroceryStoreApp
             this.cashButton.TabIndex = 6;
             this.cashButton.Text = "Оплатить";
             this.cashButton.UseVisualStyleBackColor = true;
-            this.cashButton.Click += new System.EventHandler(this.cashButton_Click);
+            this.cashButton.Click += new System.EventHandler(this.CashButton_Click);
             // 
             // productsToSaleGridView
             // 
@@ -206,7 +206,7 @@ namespace GroceryStoreApp
             this.deleteButton.TabIndex = 10;
             this.deleteButton.Text = "Удалить продукт";
             this.deleteButton.UseVisualStyleBackColor = true;
-            this.deleteButton.Click += new System.EventHandler(this.deleteButton_Click);
+            this.deleteButton.Click += new System.EventHandler(this.DeleteButton_Click);
             // 
             // BuyerForm
             // 

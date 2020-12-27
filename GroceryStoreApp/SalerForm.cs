@@ -6,7 +6,8 @@ namespace GroceryStoreApp
 {
     public partial class SalerForm : Form
     {
-        IProductRepository repository;
+        IProductRepository<WeightProduct> weightRepository;
+        IProductRepository<PieceProduct> pieceRepository;
         List<WeightProduct> weightProductsList;
         List<PieceProduct> pieceProductsList;
         public SalerForm()
@@ -15,14 +16,15 @@ namespace GroceryStoreApp
         }
         private void SalerForm_Load(object sender, EventArgs e)
         {
-            repository = new ProductFileRepository();
+            weightRepository = new WeightProductRepository();
+            pieceRepository = new PieceProductsRepository();
         }
-        private void addProductButton_Click(object sender, EventArgs e)
+        private void AddProductButton_Click(object sender, EventArgs e)
         {
             AddProductForm addProductForm = new AddProductForm();
             addProductForm.ShowDialog();
         }
-        private void deleteProductButton_Click(object sender, EventArgs e)
+        private void DeleteProductButton_Click(object sender, EventArgs e)
         {
             if (productsDataGridView.CurrentRow != null)
             {
@@ -49,7 +51,7 @@ namespace GroceryStoreApp
                 MessageBox.Show("Не выбран товар для удаления");
             }
         } 
-        private void productsDataGridView_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        private void ProductsDataGridView_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             int rowIndex = productsDataGridView.CurrentRow.Index;
             if ((Classification)productsDataGridView[categoryColumn.Name, rowIndex].Value == Classification.WeightСlasses)
@@ -66,19 +68,28 @@ namespace GroceryStoreApp
             int indexToDelete = FindIndexInArray(indexInTable, products);
             products.RemoveAt(indexToDelete);
             productsDataGridView.Rows.RemoveAt(indexToDelete);
-            repository.Update(products);
+            if (products is List<WeightProduct> weightProducts)
+            {
+                weightRepository.Update(weightProducts);
+            }
+
+            if (products is List<PieceProduct> pieceProducts)
+            {
+                pieceRepository.Update(pieceProducts);
+            }
+
         }
         private void GetProductToEdit<T>(int indexInTable, List<T> products) where T : BaseProduct
         {
             int indexToEdit = FindIndexInArray(indexInTable, products);
             if (products is List<PieceProduct>)
             {
-                AddProductForm addProductForm = new AddProductForm(pieceProductsList[indexToEdit], Classification.SinglePieces);
+                AddProductForm addProductForm = new AddProductForm(pieceProductsList[indexToEdit]);
                 addProductForm.ShowDialog();
             }
             if (products is List<WeightProduct>)
             {
-                AddProductForm addProductForm = new AddProductForm(weightProductsList[indexToEdit], Classification.WeightСlasses);
+                AddProductForm addProductForm = new AddProductForm(weightProductsList[indexToEdit]);
                 addProductForm.ShowDialog();
             }
         }
@@ -92,12 +103,12 @@ namespace GroceryStoreApp
         private void SalerForm_Activated(object sender, EventArgs e)
         {
             productsDataGridView.Rows.Clear();
-            weightProductsList = repository.GetWeightProducts();
+            weightProductsList = weightRepository.GetProducts();
             foreach (var item in weightProductsList)
             {
                 productsDataGridView.Rows.Add(item.Name, item.PurchasePrice, item.SalePrice, item.ShelfLife.ToShortDateString(), item.Count, item.Storage, item.Id, Classification.WeightСlasses);
             }
-            pieceProductsList = repository.GetPieceProducts();
+            pieceProductsList = pieceRepository.GetProducts();
             foreach (var item in pieceProductsList)
             {
                 productsDataGridView.Rows.Add(item.Name, item.PurchasePrice, item.SalePrice, item.ShelfLife.ToShortDateString(), item.Count, item.Storage, item.Id, Classification.SinglePieces);

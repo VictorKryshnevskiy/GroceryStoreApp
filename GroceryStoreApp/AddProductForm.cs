@@ -8,25 +8,22 @@ namespace GroceryStoreApp
 {
     public partial class AddProductForm : Form
     {
-        IProductRepository repository;
-        bool isEditing;
-        BaseProduct product;
-        Classification classification;
-        public AddProductForm()
+        private readonly IProductRepository<WeightProduct> weightRepository;
+        private readonly IProductRepository<PieceProduct> pieceRepository;
+        private readonly bool isEditing;
+        private readonly BaseProduct product;
+        public AddProductForm(bool isEditing = false)
         {
             InitializeComponent();
-            repository = new ProductFileRepository();
-            isEditing = false;
+            weightRepository = new WeightProductRepository();
+            pieceRepository = new PieceProductsRepository();
+            this.isEditing = isEditing;
         }
-        public AddProductForm(BaseProduct product, Classification classification)
+        public AddProductForm(BaseProduct product) : this(true)
         {
-            InitializeComponent();
-            repository = new ProductFileRepository();
-            isEditing = true;
             this.product = product;
-            this.classification = classification;
         }
-        private void saveButton_Click(object sender, EventArgs e)
+        private void SaveButton_Click(object sender, EventArgs e)
         {
             try
             {
@@ -40,12 +37,12 @@ namespace GroceryStoreApp
                     if ((Classification)classificationComboBox.SelectedValue == Classification.WeightСlasses)
                     {
                         var product = new WeightProduct(name, purchasePrice, salePrice, shelfLife, quantity);
-                        repository.Save(product);
+                        weightRepository.Save(product);
                     }
                     if ((Classification)classificationComboBox.SelectedValue == Classification.SinglePieces)
                     {
                         var product = new PieceProduct(name, purchasePrice, salePrice, shelfLife, quantity);
-                        repository.Save(product);
+                        pieceRepository.Save(product);
                     }
                 }
                 else
@@ -57,7 +54,7 @@ namespace GroceryStoreApp
                         product.SalePrice = salePrice;
                         product.ShelfLife = shelfLife;
                         product.Count = quantity;
-                        repository.Save(product as WeightProduct);
+                        weightRepository.Save(product as WeightProduct);
                     }
                     if ((Classification)classificationComboBox.SelectedValue == Classification.SinglePieces)
                     {
@@ -66,13 +63,13 @@ namespace GroceryStoreApp
                         product.SalePrice = salePrice;
                         product.ShelfLife = shelfLife;
                         product.Count = quantity;
-                        repository.Save(product as PieceProduct);
+                        pieceRepository.Save(product as PieceProduct);
                     }
                 }
                 MessageBox.Show("Товар успешно добавлен");
                 Close();
             }
-            catch (FormatException )
+            catch (FormatException)
             { MessageBox.Show("Убедитесь в правильности заполнения полей, все поля должны быть заполнены"); }
             catch (Exception ex)
             {
@@ -97,7 +94,14 @@ namespace GroceryStoreApp
                 salePriceTextBox.Text = product.SalePrice.ToString();
                 shelfLifeMaskedTextBox.Text = product.ShelfLife.ToShortDateString();
                 quantityTextBox.Text = product.Count.ToString();
-                classificationComboBox.SelectedValue = classification;
+                if (product is WeightProduct)
+                {
+                    classificationComboBox.SelectedValue = Classification.WeightСlasses;
+                }
+                if (product is PieceProduct)
+                {
+                    classificationComboBox.SelectedValue = Classification.SinglePieces;
+                }
                 classificationComboBox.Enabled = false;
             }
         }
@@ -113,32 +117,37 @@ namespace GroceryStoreApp
              .OrderBy(item => item.value)
              .ToList();
         }
-        private void purPriceTextBox_KeyPress(object sender, KeyPressEventArgs e)
+        private void PurPriceTextBox_KeyPress(object sender, KeyPressEventArgs e)
         {
+            int commaNumber = 44;
+            int backSpaseNumber = 8;
             char number = e.KeyChar;
-            if (!Char.IsDigit(number) && number != 8 && number != 44) 
+            if (!Char.IsDigit(number) && number != backSpaseNumber && number != commaNumber)
             {
                 e.Handled = true;
             }
         }
-        private void salePriceTextBox_KeyPress(object sender, KeyPressEventArgs e)
+        private void SalePriceTextBox_KeyPress(object sender, KeyPressEventArgs e)
         {
+            int commaNumber = 44;
+            int backSpaseNumber = 8;
             char number = e.KeyChar;
-            if (!Char.IsDigit(number) && number != 8 && number != 44)
+            if (!Char.IsDigit(number) && number != backSpaseNumber && number != commaNumber)
             {
                 e.Handled = true;
             }
         }
-        private void quantityTextBox_KeyPress(object sender, KeyPressEventArgs e)
+        private void QuantityTextBox_KeyPress(object sender, KeyPressEventArgs e)
         {
+            int backSpaseNumber = 8;
             char number = e.KeyChar;
-            if (!Char.IsDigit(number) && number != 8) 
+            if (!Char.IsDigit(number) && number != backSpaseNumber)
             {
                 e.Handled = true;
             }
         }
 
-        private void nameTextBox_Validating(object sender, CancelEventArgs e)
+        private void NameTextBox_Validating(object sender, CancelEventArgs e)
         {
             if (nameTextBox.Text.Trim() == "")
                 errorProvider.SetError(nameTextBox, "Введите значение");
@@ -146,7 +155,7 @@ namespace GroceryStoreApp
                 errorProvider.SetError(nameTextBox, "");
         }
 
-        private void purPriceTextBox_Validating(object sender, CancelEventArgs e)
+        private void PurPriceTextBox_Validating(object sender, CancelEventArgs e)
         {
             if (purPriceTextBox.Text.Trim() == "")
                 errorProvider.SetError(purPriceTextBox, "Введите значение");
@@ -154,14 +163,14 @@ namespace GroceryStoreApp
                 errorProvider.SetError(purPriceTextBox, "");
         }
 
-        private void salePriceTextBox_Validating(object sender, CancelEventArgs e)
+        private void SalePriceTextBox_Validating(object sender, CancelEventArgs e)
         {
             if (salePriceTextBox.Text.Trim() == "")
                 errorProvider.SetError(salePriceTextBox, "Введите значение");
             else
                 errorProvider.SetError(salePriceTextBox, "");
         }
-        private void quantityTextBox_Validating(object sender, CancelEventArgs e)
+        private void QuantityTextBox_Validating(object sender, CancelEventArgs e)
         {
             if (quantityTextBox.Text.Trim() == "")
                 errorProvider.SetError(quantityTextBox, "Введите значение");

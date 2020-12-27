@@ -65,7 +65,7 @@ namespace GroceryStoreApp
             this.productsDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.productsDataGridView.Size = new System.Drawing.Size(800, 450);
             this.productsDataGridView.TabIndex = 2;
-            this.productsDataGridView.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.productsDataGridView_CellDoubleClick);
+            this.productsDataGridView.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.ProductsDataGridView_CellDoubleClick);
             // 
             // nameColumn
             // 
@@ -125,7 +125,7 @@ namespace GroceryStoreApp
             this.addProductButton.TabIndex = 3;
             this.addProductButton.Text = "Добавить товар";
             this.addProductButton.UseVisualStyleBackColor = true;
-            this.addProductButton.Click += new System.EventHandler(this.addProductButton_Click);
+            this.addProductButton.Click += new System.EventHandler(this.AddProductButton_Click);
             // 
             // deleteProductButton
             // 
@@ -135,7 +135,7 @@ namespace GroceryStoreApp
             this.deleteProductButton.TabIndex = 4;
             this.deleteProductButton.Text = "Удалить товар";
             this.deleteProductButton.UseVisualStyleBackColor = true;
-            this.deleteProductButton.Click += new System.EventHandler(this.deleteProductButton_Click);
+            this.deleteProductButton.Click += new System.EventHandler(this.DeleteProductButton_Click);
             // 
             // SalerForm
             // 

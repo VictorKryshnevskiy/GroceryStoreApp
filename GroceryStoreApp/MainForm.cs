@@ -12,16 +12,17 @@ namespace GroceryStoreApp
             InitializeComponent();
         }
 
-        private void confirmUserButton_Click(object sender, EventArgs e)
+        private void ConfirmUserButton_Click(object sender, EventArgs e)
         {
+            var selectedValue = (Users)selectUserComboBox.SelectedValue;
             if (selectUserComboBox.SelectedItem != null)
             {
-                if ((Users)selectUserComboBox.SelectedValue == Users.Buyer)
+                if (selectedValue == Users.Buyer)
                 {
                     BuyerForm buyerForm = new BuyerForm();
                     buyerForm.ShowDialog();
                 }
-                if ((Users)selectUserComboBox.SelectedValue == Users.Saler)
+                if (selectedValue == Users.Saler)
                 {
                     SalerForm salerForm = new SalerForm();
                     salerForm.ShowDialog();

@@ -63,7 +63,7 @@ namespace GroceryStoreApp
             this.confirmUserButton.TabIndex = 2;
             this.confirmUserButton.Text = "Далее";
             this.confirmUserButton.UseVisualStyleBackColor = true;
-            this.confirmUserButton.Click += new System.EventHandler(this.confirmUserButton_Click);
+            this.confirmUserButton.Click += new System.EventHandler(this.ConfirmUserButton_Click);
             // 
             // MainForm
             // 
